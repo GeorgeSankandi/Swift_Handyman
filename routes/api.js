@@ -32,7 +32,7 @@ router.post('/chat', async (req, res) => {
     }
 
     // --- 2. Construct the Prompt for Gemini ---
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest"});
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite"});
     const prompt = `You are a friendly and helpful customer service assistant for "Swift Handyman", a digital marketplace for technical services in Namibia. Your tone should be professional yet welcoming.
 
     Based on the following context from our database and the user's question, provide a helpful and concise answer. Do not mention that you are an AI. If the context helps you answer, use it. If the query is a general greeting or unrelated to finding a service, just have a normal, friendly conversation.
