@@ -1,0 +1,53 @@
+<h3 class="section-title">Edit Service</h3>
+<div class="card">
+    <div class="card-body p-4">
+        <!-- UPDATED TO QUERY STRING FOR PUT REQUEST -->
+        <form action="/services/{{service._id}}?_method=PUT" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="title" class="form-label">Service Title</label>
+                <input type="text" class="form-control" id="title" name="title" value="{{service.title}}" required>
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Price (N$)</label>
+                <input type="number" class="form-control" id="price" name="price" value="{{service.price}}" required>
+            </div>
+            <div class="mb-3">
+                <label for="category" class="form-label">Category</label>
+                <select id="category" name="category" class="form-select">
+                    {{#select service.category}}
+                    <option value="Plumbing">Plumbing</option>
+                    <option value="Electrical">Electrical</option>
+                    <option value="Mechanical">Mechanical</option>
+                    <option value="General">General Maintenance</option>
+                    {{/select}}
+                </select>
+            </div>
+            <hr>
+            <div class="row mb-3 align-items-center">
+                <div class="col-md-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="onSale" name="onSale" value="true" {{#if service.onSale}}checked{{/if}}>
+                        <label class="form-check-label" for="onSale">
+                            <strong>Put this service on sale?</strong>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <label for="saleEndDate" class="form-label">Sale End Date</label>
+                    <input type="date" class="form-control" id="saleEndDate" name="saleEndDate" value="{{formatDate service.saleEndDate 'YYYY-MM-DD'}}">
+                </div>
+            </div>
+            <hr>
+             <div class="mb-3">
+                <label for="serviceImage" class="form-label">Service Image (Optional: leave blank to keep current image)</label>
+                <input class="form-control" type="file" id="serviceImage" name="serviceImage">
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="5" required>{{service.description}}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="/dashboard" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>

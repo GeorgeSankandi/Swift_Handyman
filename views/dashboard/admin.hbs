@@ -1,0 +1,249 @@
+<h1 class="display-5">Admin Dashboard</h1>
+<p class="lead">Welcome, {{user.name}}. Full control panel.</p>
+<hr>
+
+<!-- Tab Navigation -->
+<ul class="nav nav-tabs mb-4" id="adminTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="content-tab" data-bs-toggle="tab" data-bs-target="#content-pane" type="button" role="tab" aria-controls="content-pane" aria-selected="true">Site Content</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="articles-tab" data-bs-toggle="tab" data-bs-target="#articles-pane" type="button" role="tab" aria-controls="articles-pane" aria-selected="false">Articles</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="services-tab" data-bs-toggle="tab" data-bs-target="#services-pane" type="button" role="tab" aria-controls="services-pane" aria-selected="false">Services</button>
+  </li>
+   <li class="nav-item" role="presentation">
+    <button class="nav-link" id="bookings-tab" data-bs-toggle="tab" data-bs-target="#bookings-pane" type="button" role="tab" aria-controls="bookings-pane" aria-selected="false">Bookings</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="providers-tab" data-bs-toggle="tab" data-bs-target="#providers-pane" type="button" role="tab" aria-controls="providers-pane" aria-selected="false">Providers</button>
+  </li>
+</ul>
+
+<!-- Tab Content -->
+<div class="tab-content" id="adminTabContent">
+
+  <!-- ================================== -->
+  <!-- === SITE CONTENT MANAGER PANE  === -->
+  <!-- ================================== -->
+  <div class="tab-pane fade show active" id="content-pane" role="tabpanel" aria-labelledby="content-tab" tabindex="0">
+    <h3 class="section-title">Manage Site Content</h3>
+    <div class="card mb-5">
+        <div class="card-body p-4">
+            <form action="/dashboard/site-content" method="POST" enctype="multipart/form-data">
+                <h5 class="card-title">Hero Sections Content</h5>
+                <!-- (Hero sections content same as before) -->
+                <div class="p-3 mb-3" style="background-color: #f8f9fa; border-radius: .25rem;">
+                    <h6>Home Page</h6>
+                    <div class="mb-3">
+                        <label for="home_hero_title" class="form-label">Hero Title</label>
+                        <input type="text" id="home_hero_title" name="home_hero_title" class="form-control" value="{{siteContent.home_hero_title}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="home_hero_subtitle" class="form-label">Hero Subtitle</label>
+                        <input type="text" id="home_hero_subtitle" name="home_hero_subtitle" class="form-control" value="{{siteContent.home_hero_subtitle}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="home_hero_image" class="form-label">Hero Background Image</label>
+                        <input type="file" id="home_hero_image" name="home_hero_image" class="form-control">
+                        <small class="text-muted">Current: {{siteContent.home_hero_image}}</small>
+                    </div>
+                </div>
+
+                <!-- ... (Include other pages hero sections here similarly) ... -->
+                
+                <button type="submit" class="btn btn-primary">Save All Content</button>
+            </form>
+        </div>
+    </div>
+  </div>
+
+  <!-- =============================== -->
+  <!-- ===   ARTICLE MANAGER PANE  === -->
+  <!-- =============================== -->
+  <div class="tab-pane fade" id="articles-pane" role="tabpanel" aria-labelledby="articles-tab" tabindex="0">
+    <h3 class="section-title">Manage Articles</h3>
+    <div class="card mb-5">
+        <div class="card-body p-4">
+            <h5 class="card-title">Create New Article</h5>
+            <form action="/articles" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Article Title</label>
+                    <input type="text" id="title" name="title" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="snippet" class="form-label">Snippet</label>
+                    <input type="text" id="snippet" name="snippet" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="serviceImage" class="form-label">Article Image</label>
+                    <input type="file" id="serviceImage" name="serviceImage" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="content" class="form-label">Full Content</label>
+                    <textarea id="content" name="content" class="form-control" rows="8" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Article</button>
+            </form>
+        </div>
+    </div>
+
+    <h5 class="mt-5">Existing Articles</h5>
+    {{#if articles}}
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Snippet</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each articles}}
+                <tr>
+                    <td>{{this.title}}</td>
+                    <td>{{this.snippet}}</td>
+                    <td>{{formatDate this.createdAt 'YYYY-MM-DD'}}</td>
+                    <td>
+                        <a href="/articles/edit/{{this._id}}" class="btn btn-sm btn-secondary">Edit</a>
+                        <!-- UPDATED TO QUERY STRING -->
+                        <form action="/articles/{{this._id}}?_method=DELETE" method="POST" class="d-inline">
+                            <input type="submit" value="Delete" class="btn btn-sm btn-danger">
+                        </form>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    {{else}}
+    <p>There are no articles on the platform yet.</p>
+    {{/if}}
+  </div>
+
+  <!-- =============================== -->
+  <!-- ===    SERVICES PANE        === -->
+  <!-- =============================== -->
+  <div class="tab-pane fade" id="services-pane" role="tabpanel" aria-labelledby="services-tab" tabindex="0">
+    <h3 class="section-title">All Services on Platform</h3>
+    
+    <div class="d-flex justify-content-end mb-3">
+        <!-- UPDATED TO QUERY STRING -->
+        <form action="/services/delete-all?_method=DELETE" method="POST" onsubmit="return confirm('Are you absolutely sure you want to delete ALL services? This action cannot be undone.');">
+            <button type="submit" class="btn btn-danger">Delete All Services</button>
+        </form>
+    </div>
+
+    {{#if services}}
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Provider</th>
+                    <th>Category</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each services}}
+                <tr>
+                    <td><a href="/services/{{_id}}">{{title}}</a></td>
+                    <td>{{provider.name}}</td>
+                    <td>{{category}}</td>
+                    <td>
+                        <a href="/services/edit/{{_id}}" class="btn btn-sm btn-secondary">Edit</a>
+                        <!-- UPDATED TO QUERY STRING -->
+                        <form action="/services/{{_id}}?_method=DELETE" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this service?');">
+                            <input type="submit" value="Delete" class="btn btn-sm btn-danger">
+                        </form>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    {{else}}
+    <p>There are no services on the platform.</p>
+    {{/if}}
+  </div>
+
+  <!-- =============================== -->
+  <!-- ===    BOOKINGS PANE        === -->
+  <!-- =============================== -->
+  <div class="tab-pane fade" id="bookings-pane" role="tabpanel" aria-labelledby="bookings-tab" tabindex="0">
+    <h3 class="section-title">All Bookings</h3>
+    {{#if bookings}}
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+        <thead>
+                <tr>
+                    <th>Client</th>
+                    <th>Provider</th>
+                    <th>Service</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each bookings}}
+                <tr>
+                    <td>{{client.name}}</td>
+                    <td>{{provider.name}}</td>
+                    <td>{{service.title}}</td>
+                    <td>{{status}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    {{else}}
+    <p>There are no bookings on the platform.</p>
+    {{/if}}
+  </div>
+
+  <!-- =============================== -->
+  <!-- ===    PROVIDERS PANE       === -->
+  <!-- =============================== -->
+  <div class="tab-pane fade" id="providers-pane" role="tabpanel" aria-labelledby="providers-tab" tabindex="0">
+    <h3 class="section-title">All Service Providers</h3>
+    <div class="row">
+    {{#if providers}}
+        {{#each providers}}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{this.name}}</h5>
+                    <p class="card-text text-muted">{{this.email}}</p>
+                    <a href="/provider/{{this._id}}" class="btn btn-secondary mt-auto">View Provider Details</a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    {{else}}
+        <p>There are no service providers registered on the platform.</p>
+    {{/if}}
+    </div>
+  </div>
+
+</div>
+
+<!-- Tab Persistence Script (DOM Memory) -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var activeTabId = localStorage.getItem('activeAdminTab');
+        if (activeTabId) {
+            var tabTrigger = new bootstrap.Tab(document.querySelector(activeTabId));
+            tabTrigger.show();
+        }
+
+        var tabElsu = document.querySelectorAll('button[data-bs-toggle="tab"]');
+        tabElsu.forEach(function(tabEl) {
+            tabEl.addEventListener('shown.bs.tab', function (event) {
+                localStorage.setItem('activeAdminTab', '#' + event.target.id);
+            });
+        });
+    });
+</script>

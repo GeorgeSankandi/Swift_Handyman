@@ -1,0 +1,421 @@
+/* --- Corporate Minimalist Design for Swift Handyman --- */
+
+/* 1. Color Palette & Root Variables */
+:root {
+  --namibian-blue: #001489;
+  --namibian-red: #DA291C;
+  --namibian-green: #009A44;
+  --namibian-yellow: #FFC72C;
+  --namibian-white: #FFFFFF;
+  --light-gray: #f8f9fa;
+  --dark-charcoal: #343a40;
+  --medium-gray: #6c757d;
+  --border-color: #dee2e6;
+  --shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+  --gradient-bg: linear-gradient(90deg, var(--namibian-blue) 0%, var(--namibian-red) 100%);
+  --gradient-btn: linear-gradient(45deg, var(--namibian-red) 0%, #a71e14 100%);
+}
+
+/* 2. Typography & Base Styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--namibian-white);
+  color: var(--dark-charcoal);
+  font-weight: 400;
+  line-height: 1.7;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  color: var(--namibian-blue);
+}
+
+a {
+  color: var(--namibian-red);
+  text-decoration: none; /* Default no underline */
+  transition: all 0.3s ease;
+}
+
+/* --- NEW: Globally remove hover underlines from all links and buttons --- */
+a:hover, .btn:hover {
+  color: var(--dark-charcoal);
+  text-decoration: none !important; 
+}
+
+/* 3. Layout & Spacing */
+.main-content {
+  flex: 1;
+  padding-top: 1rem;
+  padding-bottom: 5rem;
+}
+
+.section-title {
+  margin-bottom: 3rem;
+  font-weight: 600;
+  color: var(--namibian-blue);
+}
+
+/* 4. Component Styling */
+
+/* Navigation Bar */
+.navbar {
+  background-color: var(--namibian-white);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: var(--shadow);
+  padding: 1rem 0;
+}
+
+.navbar-brand {
+  color: var(--namibian-blue) !important;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.navbar-brand .brand-highlight {
+    color: var(--namibian-yellow);
+}
+
+/* --- NEW: Solid Button Effect for Nav Links --- */
+.navbar .nav-link {
+  color: var(--dark-charcoal);
+  font-weight: 500;
+  margin: 0 0.25rem;
+  padding: 0.5rem 1rem !important; /* Add padding for button shape */
+  border-radius: 0.25rem;          /* Rounded corners */
+  transition: all 0.3s ease;
+}
+
+/* Hover State, Active State, and Dropdown Open State */
+.navbar .nav-link:hover, 
+.navbar .nav-link.active-nav,
+.navbar .nav-item.show .nav-link {
+  background-color: var(--namibian-red); /* Solid Background */
+  color: var(--namibian-white) !important; /* White Text */
+  box-shadow: 0 2px 5px rgba(218, 41, 28, 0.3);
+}
+
+/* Fix for dropdown items ensuring visibility */
+.dropdown-item:hover {
+    background-color: var(--light-gray);
+    color: var(--namibian-red) !important;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 0.25rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-primary {
+  background: var(--gradient-btn);
+  color: var(--namibian-white);
+}
+
+.btn-primary:hover {
+  background-color: #b02116; /* Darker red */
+  color: var(--namibian-white);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(218, 41, 28, 0.3);
+}
+
+.btn-secondary {
+    background-color: var(--medium-gray);
+    color: var(--namibian-white);
+}
+
+.btn-secondary:hover {
+    background-color: var(--dark-charcoal);
+    color: var(--namibian-white);
+}
+
+/* Cards */
+.card {
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  color: var(--namibian-blue);
+  font-weight: 600;
+}
+
+.card-img-top {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+/* Forms */
+.form-control, .form-select {
+    border-radius: 0.25rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+}
+.form-control:focus, .form-select:focus {
+    border-color: var(--namibian-blue);
+    box-shadow: 0 0 0 0.25rem rgba(0, 20, 137, 0.1);
+}
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+/* Hero Section */
+.hero {
+  background: var(--gradient-bg);
+  background-size: cover;
+  background-position: center center;
+  position: relative;
+  padding: 6rem 0;
+  text-align: center;
+  color: var(--namibian-white);
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 20, 137, 0.7); /* Blue overlay */
+    z-index: 1;
+}
+
+.hero .container {
+    position: relative;
+    z-index: 2;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    font-weight: 600;
+    color: var(--namibian-white);
+}
+.hero p.lead {
+    font-size: 1.25rem;
+    color: rgba(255,255,255,0.9);
+    max-width: 700px;
+    margin: 1rem auto 2rem;
+}
+
+.hero-sm {
+    padding: 4rem 0;
+}
+.hero-sm h1 {
+    font-size: 2.5rem;
+}
+
+
+/* Footer */
+.footer {
+  background-color: var(--dark-charcoal);
+  color: var(--light-gray);
+  padding: 3rem 0; /* Increased padding */
+  font-size: 0.9rem;
+}
+.footer a {
+    color: var(--light-gray);
+}
+.footer a:hover {
+    color: var(--namibian-yellow);
+}
+.footer h5 {
+    color: var(--namibian-white);
+    margin-bottom: 1.5rem;
+}
+
+/* Tables (for Dashboards) */
+.table {
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+}
+.table thead {
+    background-color: var(--light-gray);
+}
+.table th {
+    font-weight: 600;
+    color: var(--namibian-blue);
+}
+
+/* Alerts / Messages */
+.alert {
+    border-radius: 0.25rem;
+}
+
+
+/* --- Sale Timer & Badge Styles --- */
+.sale-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: var(--namibian-yellow);
+    color: var(--dark-charcoal);
+    padding: 3px 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 0.25rem;
+}
+.sale-badge-large {
+    background-color: var(--namibian-yellow);
+    color: var(--dark-charcoal);
+    padding: 5px 15px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 1rem;
+    border-radius: 0.25rem;
+}
+.timer-container, .timer-container-large {
+    background: #fff3cd;
+    border: 1px solid #ffeeba;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    margin: 0.5rem 0;
+    text-align: center;
+}
+.countdown-timer {
+    font-weight: 600;
+    color: var(--namibian-red);
+    font-size: 1.1rem;
+}
+.countdown-timer span {
+    margin: 0 0.25rem;
+}
+
+
+/* --- AI Chatbot Styles --- */
+#chatbot-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+#chat-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--gradient-bg);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease;
+}
+#chat-icon:hover {
+    transform: scale(1.1);
+}
+#chat-window {
+    width: 350px;
+    height: 500px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+}
+#chat-window.hidden {
+    opacity: 0;
+    transform: scale(0.5) translateY(100px);
+    pointer-events: none;
+}
+.chat-header {
+    background: var(--gradient-bg);
+    color: white;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.chat-header h5 {
+    margin: 0;
+    color: white;
+}
+#close-chat {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+#chat-body {
+    flex-grow: 1;
+    padding: 1rem;
+    overflow-y: auto;
+}
+.message {
+    margin-bottom: 1rem;
+    display: flex;
+}
+.message p {
+    padding: 0.75rem 1rem;
+    border-radius: 18px;
+    max-width: 80%;
+    margin: 0;
+    line-height: 1.5;
+}
+.message.sent {
+    justify-content: flex-end;
+}
+.message.sent p {
+    background-color: var(--namibian-red);
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+.message.received {
+    justify-content: flex-start;
+}
+.message.received p {
+    background-color: var(--light-gray);
+    color: var(--dark-charcoal);
+    border-bottom-left-radius: 4px;
+}
+p.typing {
+    animation: blink 1s infinite;
+}
+@keyframes blink {
+    50% { opacity: 0.5; }
+}
+.chat-footer {
+    padding: 0.5rem 1rem;
+    border-top: 1px solid var(--border-color);
+}
+#chat-form {
+    display: flex;
+}
+#chat-input {
+    flex-grow: 1;
+    border: none;
+    padding: 0.5rem;
+    background: transparent;
+}
+#chat-input:focus {
+    outline: none;
+}
+#chat-form button {
+    background: none;
+    border: none;
+    color: var(--namibian-blue);
+    font-weight: 600;
+    cursor: pointer;
+}
