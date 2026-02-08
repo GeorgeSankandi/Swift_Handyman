@@ -6,14 +6,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatInput = document.getElementById('chat-input');
     const chatBody = document.getElementById('chat-body');
 
+    // Toggle Chat Window
     chatIcon.addEventListener('click', () => {
         chatWindow.classList.toggle('hidden');
+        if(!chatWindow.classList.contains('hidden')) {
+            setTimeout(() => chatInput.focus(), 100);
+        }
     });
 
     closeChat.addEventListener('click', () => {
         chatWindow.classList.add('hidden');
     });
 
+    // Handle "Enter" key in textarea to submit
+    chatInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault(); // Prevent new line
+            chatForm.dispatchEvent(new Event('submit')); // Trigger form submit
+        }
+    });
+
+    // Handle Form Submit
     chatForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const userMessage = chatInput.value.trim();
@@ -58,7 +71,9 @@ document.addEventListener('DOMContentLoaded', () => {
         messageDiv.classList.add('message', type);
         
         const p = document.createElement('p');
-        p.textContent = text;
+        // Handle newlines in the text for display
+        p.innerHTML = text.replace(/\n/g, '<br>');
+        
         if(isTyping) p.classList.add('typing');
 
         messageDiv.appendChild(p);
