@@ -41,7 +41,7 @@ a {
   transition: all 0.3s ease;
 }
 
-/* --- NEW: Globally remove hover underlines from all links and buttons --- */
+/* Globally remove hover underlines from all links and buttons */
 a:hover, .btn:hover {
   color: var(--dark-charcoal);
   text-decoration: none !important; 
@@ -80,7 +80,7 @@ a:hover, .btn:hover {
     color: var(--namibian-yellow);
 }
 
-/* --- NEW: Solid Button Effect for Nav Links --- */
+/* Solid Button Effect for Nav Links */
 .navbar .nav-link {
   color: var(--dark-charcoal);
   font-weight: 500;
@@ -225,7 +225,7 @@ a:hover, .btn:hover {
 .footer {
   background-color: var(--dark-charcoal);
   color: var(--light-gray);
-  padding: 3rem 0; /* Increased padding */
+  padding: 3rem 0;
   font-size: 0.9rem;
 }
 .footer a {
@@ -322,7 +322,10 @@ a:hover, .btn:hover {
 }
 #chat-window {
     width: 350px;
-    height: 500px;
+    /* DYNAMIC HEIGHT CALCULATION: 100% Viewport Height minus 120px (Top Margin + Bottom Icon Space) */
+    height: calc(100vh - 120px);
+    max-height: 700px; /* Constraint for very large screens */
+    min-height: 400px; /* Constraint for very small screens */
     border-radius: 10px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.2);
     background-color: white;
@@ -362,6 +365,7 @@ a:hover, .btn:hover {
     flex-grow: 1;
     padding: 1rem;
     overflow-y: auto;
+    background-color: #f9f9f9;
 }
 .message {
     margin-bottom: 1rem;
@@ -373,6 +377,7 @@ a:hover, .btn:hover {
     max-width: 80%;
     margin: 0;
     line-height: 1.5;
+    font-size: 0.9rem;
 }
 .message.sent {
     justify-content: flex-end;
@@ -388,6 +393,7 @@ a:hover, .btn:hover {
 .message.received p {
     background-color: var(--light-gray);
     color: var(--dark-charcoal);
+    border: 1px solid var(--border-color);
     border-bottom-left-radius: 4px;
 }
 p.typing {
@@ -396,26 +402,172 @@ p.typing {
 @keyframes blink {
     50% { opacity: 0.5; }
 }
+
+/* --- Advanced Chat Input Section (Matching Style Request) --- */
 .chat-footer {
-    padding: 0.5rem 1rem;
+    padding: 10px;
+    background-color: #fff;
     border-top: 1px solid var(--border-color);
 }
-#chat-form {
-    display: flex;
+
+.container_chat_bot {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
-#chat-input {
-    flex-grow: 1;
-    border: none;
-    padding: 0.5rem;
+
+.container_chat_bot .container-chat-options {
+  position: relative;
+  display: flex;
+  /* Gradient adapted to theme: Blue to Red mix */
+  background: linear-gradient(
+    to bottom right,
+    var(--namibian-blue),
+    var(--namibian-blue),
+    #888,
+    var(--namibian-red)
+  );
+  border-radius: 16px;
+  padding: 1.5px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* Shiny Blur Effect */
+.container_chat_bot .container-chat-options::after {
+    position: absolute;
+    content: "";
+    top: -10px;
+    left: -10px;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(255, 255, 255, 0.8),
+      rgba(255, 255, 255, 0.3),
+      rgba(0, 0, 0, 0)
+    );
+    width: 30px;
+    height: 30px;
+    filter: blur(1px);
+}
+
+.container_chat_bot .container-chat-options .chat {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff; /* White background for input area */
+  border-radius: 15px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.container_chat_bot .container-chat-options .chat .chat-bot {
+  position: relative;
+  display: flex;
+}
+
+.container_chat_bot .chat .chat-bot textarea {
+  background-color: transparent;
+  border-radius: 16px;
+  border: none;
+  width: 100%;
+  height: 50px;
+  color: var(--dark-charcoal);
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  padding: 12px;
+  resize: none;
+  outline: none;
+}
+
+.container_chat_bot .chat .chat-bot textarea::placeholder {
+    color: var(--medium-gray);
+    transition: all 0.3s ease;
+}
+.container_chat_bot .chat .chat-bot textarea:focus::placeholder {
+    color: #ccc;
+}
+
+/* Scrollbar styling for textarea */
+.container_chat_bot .chat .chat-bot textarea::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+.container_chat_bot .chat .chat-bot textarea::-webkit-scrollbar-track {
     background: transparent;
 }
-#chat-input:focus {
-    outline: none;
+.container_chat_bot .chat .chat-bot textarea::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
 }
-#chat-form button {
-    background: none;
-    border: none;
-    color: var(--namibian-blue);
-    font-weight: 600;
+
+.container_chat_bot .chat .options {
+  display: flex;
+  justify-content: flex-end; /* Changed from space-between to flex-end to keep button right */
+  align-items: flex-end;
+  padding: 5px 10px 10px 10px;
+}
+
+/* Removed unused .btns-add styles since icons were deleted */
+
+.container_chat_bot .chat .options .btn-submit {
+  display: flex;
+  padding: 2px;
+  /* Gradient Button based on theme */
+  background-image: var(--gradient-btn);
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+.container_chat_bot .chat .options .btn-submit i {
+    width: 30px;
+    height: 30px;
+    padding: 6px;
+    /* Transparent white overlay */
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    backdrop-filter: blur(3px);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container_chat_bot .chat .options .btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(218, 41, 28, 0.3);
+}
+
+.container_chat_bot .chat .options .btn-submit:active {
+    transform: scale(0.92);
+}
+
+/* Chatbot Tags */
+.container_chat_bot .tags {
+  padding: 10px 0 0 0;
+  display: flex;
+  color: var(--dark-charcoal);
+  font-size: 10px;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.container_chat_bot .tags span {
+    padding: 4px 8px;
+    background-color: var(--light-gray);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
     cursor: pointer;
+    user-select: none;
+    transition: all 0.2s ease;
+    color: var(--medium-gray);
+}
+
+.container_chat_bot .tags span:hover {
+    background-color: var(--namibian-blue);
+    color: white;
+    border-color: var(--namibian-blue);
 }
