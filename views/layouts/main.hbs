@@ -31,10 +31,32 @@
                 <!-- Messages will be appended here -->
                 <div class="message received"><p>Hello! How can I help you find a service today?</p></div>
             </div>
+            
+            <!-- Updated Chat Footer (Icons Removed) -->
             <div class="chat-footer">
                 <form id="chat-form">
-                    <input type="text" id="chat-input" placeholder="Ask about services..." autocomplete="off">
-                    <button type="submit">Send</button>
+                    <div class="container_chat_bot">
+                        <div class="container-chat-options">
+                            <div class="chat">
+                                <div class="chat-bot">
+                                    <textarea id="chat-input" placeholder="Type your question..." required></textarea>
+                                </div>
+                                <div class="options">
+                                    <!-- Icons removed here -->
+                                    <button type="submit" class="btn-submit">
+                                        <i>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                                        </i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tags">
+                            <span onclick="const input = document.getElementById('chat-input'); input.value='Looking for a plumber'; input.focus();">Plumbing</span>
+                            <span onclick="const input = document.getElementById('chat-input'); input.value='Electrical help'; input.focus();">Electrical</span>
+                            <span onclick="const input = document.getElementById('chat-input'); input.value='Price inquiry'; input.focus();">Pricing</span>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
